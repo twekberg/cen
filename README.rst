@@ -2,7 +2,7 @@
 TODO
 ====
 
-Figure out why examples/image_png work but app does not.
+
 
 
 ======
@@ -59,4 +59,6 @@ A png file will be displayed.
 
 Notes
 =====
-magick convert rose.jpg rose.png
+Next is to add white space padding (already computed) to recenter the image.
+
+google imagemagick add white space

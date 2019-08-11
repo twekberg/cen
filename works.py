@@ -4,8 +4,6 @@
 Display a png file and report the mouse position on a mouse click.
 """
 
-import subprocess
-
 #from tkinter import *      
 import tkinter as tk
 
@@ -77,47 +75,21 @@ def get_png_header(filename):
     return dict()
 
 
-def compute_padding(x, y, png_header):
-    """
-    Determine the padding needed to center the image at (x,y).
-    """
-    if x < png_header['width'] / 2:
-        pad_right = 0
-        pad_left = png_header['width'] - 2 * x
-    else:
-        pad_left = 0
-        pad_right = 2 * x - png_header['width']
-    if y < png_header['height'] / 2:
-        pad_bottom = 0
-        pad_top = png_header['height'] - 2 * y
-    else:
-        pad_top = 0
-        pad_bottom = 2 * y - png_header['height']
-    return (pad_left, pad_top, pad_right, pad_bottom)
-
-
 def main():
-    filename_png = "ball2.png"
-    ret = subprocess.call(['magick', 'convert', 'ball.jpg', filename_png])
-    if ret != 0:
-        print('Got a subprocess.call error', ret)
-        exit(ret)
-
-    png_header = get_png_header(filename_png)
+    filename = "ball.png"
+    png_header = get_png_header(filename)
 
     root = tk.Tk()      
     canvas = tk.Canvas(root, width = png_header['width'] + margin_x * 2,
                        height = png_header['height'] + margin_y * 2)
     canvas.pack()      
     # Putting the next line into __init__ causes the image to not appear.
-    img = tk.PhotoImage(file=filename_png)
+    img = tk.PhotoImage(file=filename)
     xy = []
     application = Application(root, canvas, img, png_header, xy)
     tk.mainloop()
     (x, y) = xy
-    (pad_left, pad_top, pad_right, pad_bottom) = compute_padding(x, y, png_header)
-    print(x, y, png_header, pad_left, pad_top, pad_right, pad_bottom)
-
+    print(x, y)
 
 if __name__ == '__main__':
     main()
